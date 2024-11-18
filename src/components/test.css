@@ -1,0 +1,9 @@
+nav{
+    display: flex;
+    flex-direction: column;
+    background-color: #f7fafb;
+    margin-left: 26%;
+    width: 75%;
+    position: relative;
+    top: 50px;
+}
