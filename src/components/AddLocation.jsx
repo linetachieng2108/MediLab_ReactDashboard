@@ -2,8 +2,11 @@ import { useState } from "react";
 import Layout from "../helpers/Layout";
 import Main from "../styles/Main";
 import axiosInstance from "../helpers/axiosInstance";
+import CheckSession from "../helpers/CheckSession";
 
 const AddLocation = () => {
+    const {username, admin_id, token} = CheckSession();
+
     const [name, setName] = useState(null);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(null);

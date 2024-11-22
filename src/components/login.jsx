@@ -1,87 +1,81 @@
 import styled from "styled-components"; 
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../helpers/axiosInstance";
 
 const Login = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [isPending, setIsPending] = useState(false);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(null);
+  const [failure, setFailure] = useState(null);
 
-    const handleSubmit = (e) => {
-        e.preventDefault(); 
-        
-        console.log('Username:', username);
-        console.log('Password:', password);
 
+    const Submit = (e) => {
+      e.preventDefault(); 
+      setLoading(true);
+      console.log("Submitting"); 
         
-        setUsername('');
+      axiosInstance.post("/login",{
+        email,
+        password
+      })
+      .then(function(response) {
+        console.log(response.data);
+        setLoading(false);
+        console.log(response.data.message);
+        if(response.data && response.data.token && response.data.admin_id){
+          localStorage.setItem("admin_id", response.data.admin_id);
+          localStorage.setItem("username", response.data.username);
+          localStorage.setItem("token", response.data.token);
+          navigate("/");
+        }
+        setEmail('');
         setPassword('');
+        
 
-        setIsPending(true);
+    }).catch(function (error){
+        console.log(error.message);
+        setLoading(false);
+        setFailure(error.message);
+        setSuccess(null);
+    }
+    );
+       
     };
 
   return (
-    <Form>
-    <div className="login">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div className='username'>
-          <label>Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+    <div>
+            
+                <form className="card shadow p-4" onSubmit={Submit}>
+                    <div className="card-body">
+                        {loading && <div className="text_warning">Loading...</div>}
+                        {success && <div className="text_success">{success}</div>}
+                        {failure && <div className="text_danger">{failure}</div>}
+                        <input 
+                            type="email" 
+                            placeholder="Enter Your Name" 
+                            className="form-control" 
+                            value={email} 
+                            onChange={(e)=> setEmail(e.target.value)} 
+                            required
+                        /><br/><br/>
+                        <input 
+                            type="password" 
+                            placeholder="Enter Your Password" 
+                            className="form-control" 
+                            value={password} 
+                            onChange={(e)=> setPassword(e.target.value)} 
+                            required
+                        /><br/><br/>
+                        <button className="btn btn-dark">Login</button>
+                    </div>
+                </form>
+            
         </div>
-
-        <div className='password'>
-          <label>Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div> 
-
-        <div className='button'>
-          { !isPending && <button>Login</button> }
-          { isPending && <button disabled>You are being logged in...</button> }
-        </div>
-
-        
-      </form>
-    </div>
-    </Form>
-  );
-};
+     );
+}
 
 export default Login;
 
-const Form = styled.form`
-.login {
-  max-width: 400px;
-  margin: 0 auto;
-  text-align: center;
-}
-.login label {
-  text-align: left;
-  display: block;
-}
-.login h2 {
-  font-size: 20px;
-  color: #f1356d;
-  margin-bottom: 30px;
-}
-
-.login button {
-  background: #f1356d;
-  color: #fff;
-  border: 0;
-  padding: 8px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-`

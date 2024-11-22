@@ -7,6 +7,10 @@ import AddPatient from './components/AddPatient';
 import AddNurse from './components/AddNurse';
 import AddBooking from './components/AddBooking';
 import AddLocation from './components/AddLocation';
+import Login from './components/Login';
+import ViewBooking from './components/ViewBooking';
+import ViewNurses from './components/ViewNurses';
+import Logout from './components/Logout';
 
 function App() {
   return (
@@ -20,6 +24,10 @@ function App() {
         <Route path='/add_nurse' element={<AddNurse/>}/>
         <Route path='/add_booking' element={<AddBooking/>}/>
         <Route path='/add_location' element={<AddLocation/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/appointments' element={<ViewBooking/>}/>
+        <Route path='/view_nurses' element={<ViewNurses/>}/>
+        <Route path='/logout' element={<Logout/>}/>
         
       </Routes>
     </div>

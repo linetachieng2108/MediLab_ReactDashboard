@@ -2,8 +2,11 @@ import { useState } from "react";
 import Layout from "../helpers/Layout";
 import Main from "../styles/Main";
 import axiosInstance from "../helpers/axiosInstance";
+import axiosInstanceToken from "../helpers/axiosInstanceToken";
+import CheckSession from "../helpers/CheckSession";
 
 const AddTest = () => {
+    const {username, admin_id, token} = CheckSession();
     const [test_name, setName] = useState(null);
     const [test_cost, setCost] = useState(null);
     const [test_desc, setDesc] = useState(null);
@@ -18,7 +21,7 @@ const AddTest = () => {
         setLoading(true);
         console.log("Submitting");
 
-        axiosInstance.post("/add_test",{
+        axiosInstanceToken.post("/add_test",{
             test_name,
             test_cost,
             test_desc,

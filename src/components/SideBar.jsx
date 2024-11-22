@@ -37,13 +37,13 @@ const SideBar = () => {
                             <Link to="/add_nurse"><AiFillProfile/>Add Nurse</Link>
                         </li>
                         <li>
-                            <Link><AiFillAliwangwang/> View Nurse</Link>
+                            <Link to="/view_nurses"><AiFillAliwangwang/> View Nurse</Link>
                         </li>
                         <li>
                             <Link to="/add_booking"><AiFillAlipayCircle/>Booking</Link>
                         </li>
                         <li>
-                            <Link><AiFillAlert/>View Bookings</Link>
+                            <Link to="/appointments"><AiFillAlert/>View Bookings</Link>
                         </li>
                         <li>
                             <Link to="/add_location"><AiTwotoneCopy/>Add Location</Link>
@@ -64,7 +64,7 @@ const SideBar = () => {
             </div>
 
             <div className="p-4">
-                <button className="btn btn-dark btn-sm"><AiOutlineLogout/>Logout</button>
+                <Link to="/logout" className="btn btn-dark btn-sm"><AiOutlineLogout/>Logout</Link>
             </div>
 
 

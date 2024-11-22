@@ -2,6 +2,7 @@ import { useState } from "react";
 import Layout from "../helpers/Layout";
 import Main from "../styles/Main";
 import axiosInstance from "../helpers/axiosInstance";
+import axiosInstanceToken from "../helpers/axiosInstanceToken";
 
 const AddNurse = () => {
     const [surname, setSurname] = useState(null);
@@ -19,7 +20,7 @@ const AddNurse = () => {
         setLoading(true);
         console.log("Submitting");
 
-        axiosInstance.post("/add_nurse",{
+        axiosInstanceToken.post("/add_nurse",{
             surname,
             othernames,
             gender,
